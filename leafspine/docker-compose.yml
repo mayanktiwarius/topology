@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:
+
+
+  r1:
+    build: vxlanrouter
+    container_name: r1
+    hostname: r1
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+    privileged: true
+    command: /bin/bash /etc/frr/run-frr.sh
+    volumes:
+      - ${PWD}/r1:/etc/frr
+    networks:
+      wan1:
+        ipv4_address: 10.0.1.21
+        ipv6_address: 10:0:1::21
+
+  r2:
+    build: vxlanrouter
+    container_name: r2
+    hostname: r2
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+    privileged: true
+    command: /bin/bash /etc/frr/run-frr.sh
+    volumes:
+      - ${PWD}/r2:/etc/frr
+    networks:
+      wan1:
+        ipv4_address: 10.0.1.22
+        ipv6_address: 10:0:1::22
+
+
+
+
+  host11:
+    build: host
+    container_name: host11
+    hostname: host11
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+    privileged: true
+    network_mode: none
+    command: /bin/bash /config/network-init.sh
+    volumes:
+      - ${PWD}/host11:/config
+
+  host22:
+    build: host
+    container_name: host22
+    hostname: host22
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+    privileged: true
+    network_mode: none
+    command: /bin/bash /config/network-init.sh
+    volumes:
+      - ${PWD}/host22:/config
+
+
+
+
+
+networks:
+  wan1:
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.1.0/24
+        - subnet: 10:0:1::/64
