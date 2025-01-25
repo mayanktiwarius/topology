@@ -3,10 +3,10 @@ version: "3.8"
 services:
 
 
-  r1:
+  leaf:
     build: vxlanrouter
-    container_name: r1
-    hostname: r1
+    container_name: leaf
+    hostname: leaf
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
       - net.ipv6.conf.all.forwarding=1
@@ -16,13 +16,13 @@ services:
       - ${PWD}/r1:/etc/frr
     networks:
       wan1:
-        ipv4_address: 10.0.1.21
-        ipv6_address: 10:0:1::21
+        ipv4_address: 10.1.1.21
+        ipv6_address: 10:1:1::21
 
-  r2:
+  daas:
     build: vxlanrouter
-    container_name: r2
-    hostname: r2
+    container_name: daas
+    hostname: daas
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
       - net.ipv6.conf.all.forwarding=1
@@ -32,16 +32,16 @@ services:
       - ${PWD}/r2:/etc/frr
     networks:
       wan1:
-        ipv4_address: 10.0.1.22
-        ipv6_address: 10:0:1::22
+        ipv4_address: 10.1.1.22
+        ipv6_address: 10:1:1::22
 
 
 
 
-  host11:
+  pg:
     build: host
-    container_name: host11
-    hostname: host11
+    container_name: pg
+    hostname: pg
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
       - net.ipv6.conf.all.forwarding=1
@@ -51,10 +51,10 @@ services:
     volumes:
       - ${PWD}/host11:/config
 
-  host22:
+  rpd:
     build: host
-    container_name: host22
-    hostname: host22
+    container_name: rpd
+    hostname: rpd
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
       - net.ipv6.conf.all.forwarding=1
@@ -62,7 +62,7 @@ services:
     network_mode: none
     command: /bin/bash /config/network-init.sh
     volumes:
-      - ${PWD}/host22:/config
+      - ${PWD}/host21:/config
 
 
 
@@ -74,5 +74,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.0.1.0/24
-        - subnet: 10:0:1::/64
+        - subnet: 10.1.1.0/24
+        - subnet: 10:1:1::/64
