@@ -65,6 +65,15 @@ services:
       - ${PWD}/host21:/config
 
 
+  links:
+    image: marcelwiget/link-containers
+    privileged: true
+    network_mode: none
+    restart: "no"
+    pid: "host"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: leaf/pg daas/rpd 
 
 
 
