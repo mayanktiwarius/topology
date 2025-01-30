@@ -11,4 +11,5 @@ until ip link show eth1 up; do
   sleep 1
 done
 
+ip addr add 192.168.12.1/24 dev eth1
 

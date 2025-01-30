@@ -7,7 +7,7 @@ until ip link show eth0 up; do
   sleep 1
 done
 
-ip addr add 192.168.12.21/24 dev eth0
+ip addr add 192.168.13.21/24 dev eth0
 ulimit -l 1024 
 
 tail -f /dev/null

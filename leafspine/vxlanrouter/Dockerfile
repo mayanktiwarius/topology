@@ -4,7 +4,8 @@ FROM ubuntu:20.04
 RUN apt-get update \
   && apt-get -y --no-install-recommends install \
   netsniff-ng iproute2 net-tools iputils-ping frr avahi-autoipd \
-  tcpdump bwm-ng ethtool fping vim-tiny iptables bridge-utils \
+  traceroute \
+  tcpdump bwm-ng ethtool fping vim-tiny iptables bridge-utils  tcptraceroute mtr \
   && rm -rf /var/lib/apt/lists/*
 
 # for whatever reason, keeping tcpdump in the original location fails to launch on aarm64

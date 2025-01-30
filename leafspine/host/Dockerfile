@@ -3,6 +3,7 @@ FROM ubuntu:20.04
 RUN apt-get update \
   && apt-get -y --no-install-recommends install \
   netsniff-ng iproute2 net-tools iputils-ping avahi-autoipd \
+  traceroute tcptraceroute mtr \
   tcpdump bwm-ng ethtool fping vim-tiny \
   && rm -rf /var/lib/apt/lists/*
 
