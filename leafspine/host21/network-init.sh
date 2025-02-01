@@ -8,6 +8,9 @@ until ip link show eth0 up; do
 done
 
 ip addr add 192.168.13.21/24 dev eth0
+ip route add 10.1.1.22 dev eth0 scope link
+ip route add 10.1.1.0/24 via 10.1.1.22 dev eth0
+ip r a 192.168.12.0/24 via 10.1.1.22 dev eth0
 ulimit -l 1024 
 
 tail -f /dev/null

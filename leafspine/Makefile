@@ -31,9 +31,9 @@ up:
 #	docker-compose up -d
 #	./validate-mac.sh
 #
-#down:
+down:
 #	./remove_xdp.sh || true
-#	docker-compose down
+	docker-compose down
 #	sudo chown -R mwiget r*
 
 ps:
